@@ -24,14 +24,14 @@ CREATE TABLE proprietario (
 	endereco_logradouro   VARCHAR(50) NOT NULL,
 	endereco_numero  	  VARCHAR(5) NOT NULL,
 	endereco_complemento  VARCHAR(20),
-	cep 				  CHAR(8) NOT NULL,
+	endereco_cep 		  CHAR(8) NOT NULL,
 	CONSTRAINT endereco_numero_valido CHECK(endereco_numero SIMILAR TO '\d{1,5}'),
-	CONSTRAINT cep_valido CHECK(cep SIMILAR TO '\d{8}'),
+	CONSTRAINT cep_valido CHECK(endereco_cep SIMILAR TO '\d{8}'),
 	FOREIGN KEY (cpf_usuario)
 		REFERENCES usuario(cpf)
 		ON DELETE CASCADE
 		ON UPDATE CASCADE,
-	UNIQUE (cep, endereco_numero, endereco_complemento)
+	UNIQUE (endereco_cep, endereco_numero, endereco_complemento)
 );
 
 CREATE TABLE motorista (
