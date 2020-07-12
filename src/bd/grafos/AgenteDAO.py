@@ -26,18 +26,18 @@ class AgenteDAO:
                 "MATCH (a:Agente {cpf:$cpf})-[:FISCALIZA]->(b:Bairro) " +
                 "RETURN b.nome; ",
                 cpf=cpf
-            )[0]
+            ).single()[0]
 
         record = self.session.read_transaction(__get_tx, cpf)
 
         agente = Agente()
-        agente.set_cpf(record["cpf"])
-        agente.set_bairro(record["bairro"])
+        agente.set_cpf(cpf)
+        agente.set_bairro(record)
         return agente
 
     def update(self, agente):
         def __delete_fiscaliza_tx(tx, cpf):
-            tx.run("MATCH (:Agente {cpf:$cpf})-[:FISCALIZA]->(b:Bairro) DELETE b", cpf=cpf)
+            tx.run("MATCH (:Agente {cpf:$cpf})-[f:FISCALIZA]->(:Bairro) DELETE f", cpf=cpf)
 
         def __insert_fiscaliza_tx(tx, cpf, bairro):
             tx.run(
