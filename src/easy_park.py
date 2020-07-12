@@ -74,8 +74,8 @@ def home_motorista_screen():
     elif selected_action == 3:
         date_fmt = "%d/%m/%Y %H:%M"
 
-        inicio = datetime.datetime.strptime(input("Início do uso (formato dd/mm/aaa hh:mm): "), date_fmt)
-        fim = datetime.datetime.strptime(input("Fim do uso (formato dd/mm/aaa hh:mm): "), date_fmt)
+        inicio = datetime.datetime.strptime(input("Início do uso (formato dd/mm/aaaa hh:mm): "), date_fmt)
+        fim = datetime.datetime.strptime(input("Fim do uso (formato dd/mm/aaaa hh:mm): "), date_fmt)
 
         latitude = float(input("Latitude desejada: "))
         longitude = float(input("Longitude desejada: "))
@@ -308,7 +308,7 @@ def signup_screen():
     cpf = input("CPF: ")
     email = input("Email: ")
     senha = input("Senha: ")
-    nascimento = datetime.datetime.strptime(input("Data de nascimento (formato dd/mm/aaa): "), date_fmt)
+    nascimento = datetime.datetime.strptime(input("Data de nascimento (formato dd/mm/aaaa): "), date_fmt)
 
     while user_type not in [1, 2, 3, 4]:
         print()
