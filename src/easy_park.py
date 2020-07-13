@@ -41,7 +41,7 @@ def home_motorista_screen():
         | 1 - Inserir um veículo                                           |
         | 2 - Listar minhas solicitações (com e sem resposta)              |
         | 3 - Listar vagas para alugar                                     |
-        | 4 - Avaliar proprietários ou fazer denúncias                     |
+        | 4 - Avaliar proprietários                                        |
         | 5 - Ver minha nota média                                         |
         | 6 - Logout                                                       |
         |                                                                  |
@@ -163,7 +163,7 @@ def home_proprietario_screen():
         | 1 - Alterar endereço                                             |
         | 2 - Inserir uma vaga                                             |
         | 3 - Responder a uma solicitação de uso de vaga                   |
-        | 4 - Avaliar motoristas ou fazer denúncias                        |
+        | 4 - Avaliar motoristas                                           |
         | 5 - Ver minha nota média                                         |
         | 6 - Logout                                                       |
         |                                                                  |

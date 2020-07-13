@@ -10,7 +10,7 @@ class AcordoDAO:
         cursor = self.connection.cursor()
 
         sql = "insert into acordo(id_solicitacao) values (%s) returning id_acordo"
-        cursor.execute(sql, (acordo.get_id_solicitacao()))
+        cursor.execute(sql, (acordo.get_id_solicitacao(),))
 
         id_acordo = cursor.fetchone()[0]
 

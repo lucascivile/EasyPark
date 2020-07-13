@@ -39,6 +39,15 @@ class SolicitacaoDAO:
         cursor.close()
         return solicitacao
 
+    def update(self, solicitacao):
+        cursor = self.connection.cursor()
+
+        sql = "update solicitacao set resposta=%s where id_solicitacao=%s"
+        cursor.execute(sql, (solicitacao.get_resposta(), solicitacao.get_id_solicitacao()))
+
+        self.connection.commit()
+        cursor.close()
+
     def list_by_cpf_motorista(self, cpf):
         cursor = self.connection.cursor()
 

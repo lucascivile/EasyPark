@@ -95,33 +95,24 @@ class ActionVaga:
 
     @staticmethod  
     def insert_avaliacao(id_vaga, cpf_agente, avaliacao, comentario):
-        print("db1")
         vagaDAO = VagaDAO()
         vagaDAOdoc = VagaDAODoc()
-        print("db2")
+
         try:
-            print("db3")
             if avaliacao:
                 vaga = vagaDAO.get(id_vaga)
-                print("db10")
                 vaga.set_liberada(avaliacao)
                 vagaDAO.update(vaga)
-                print("db4")
 
-            print("db5")
             vagaDoc = vagaDAOdoc.get(id_vaga)
             avaliacoes = vagaDoc.get_avaliacoes()
-            print("db6")
             novaAvaliacao = AvaliacaoDoc()
             novaAvaliacao.set_cpf_agente(cpf_agente)
             novaAvaliacao.set_comentario(comentario)
             novaAvaliacao.set_resultado(avaliacao)
-            print("db7")
             avaliacoes.append(novaAvaliacao)
             vagaDoc.set_avaliacoes(avaliacoes)
-            print("db8")
             vagaDAOdoc.update(vagaDoc)
-            print("db9")
         except Exception as e:
             print(e)
             return False

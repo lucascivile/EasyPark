@@ -146,12 +146,11 @@ class ActionAcordo:
 
         solicitacao = solicitacaoDAO.get(acordoDAO.get(id_acordo).get_id_solicitacao())
         vaga = vagaDAO.get(solicitacao.get_id_vaga())
-
         acordoDAODoc = AcordoDAODoc()
 
         try:
             acordoDoc = acordoDAODoc.get(id_acordo)
-            acordoDoc.setNotaMP(nota)
+            acordoDoc.set_nota_MP(nota)
             acordoDAODoc.update(acordoDoc, vaga.get_cpf_proprietario(), solicitacao.get_cpf_motorista(), solicitacao.get_id_vaga())
         except:
             return False
@@ -171,7 +170,7 @@ class ActionAcordo:
 
         try:
             acordoDoc = acordoDAODoc.get(id_acordo)
-            acordoDoc.setNotaPM(nota)
+            acordoDoc.set_nota_PM(nota)
             acordoDAODoc.update(acordoDoc, vaga.get_cpf_proprietario(), solicitacao.get_cpf_motorista(), solicitacao.get_id_vaga())
         except:
             return False
