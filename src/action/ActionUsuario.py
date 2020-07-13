@@ -215,7 +215,7 @@ class ActionUsuario:
                     s = solicitacaoDao.get(a.get_id_solicitacao())
 
                     now = datetime.datetime.now()
-                    if s.get_cpf_motorista() == cpf and s.getFim() < now:
+                    if s.get_cpf_motorista() == cpf and s.get_fim() < now:
                         nota = acordoDAODoc.get(a.get_id_acordo()).get_nota_PM()
                         if nota is not None:
                             soma_nota += nota
@@ -232,7 +232,7 @@ class ActionUsuario:
                     v = vagaDao.get(s.get_id_vaga())
 
                     now = datetime.datetime.now()
-                    if v.get_cpf_proprietario() == cpf and s.getFim() < now:
+                    if v.get_cpf_proprietario() == cpf and s.get_fim() < now:
                         nota = acordoDAODoc.get(a.get_id_acordo()).get_nota_MP()
                         if nota is not None:
                             soma_nota += nota
