@@ -25,8 +25,10 @@ class SolicitacaoDAO:
         cursor.execute(sql, (id_solicitacao,))
 
         record = cursor.fetchone()
-        solicitacao = Solicitacao()
+        if record is None:
+            return None
 
+        solicitacao = Solicitacao()
         solicitacao.set_id_solicitacao(record[0])
         solicitacao.set_cpf_motorista(record[1])
         solicitacao.set_id_vaga(record[2])
@@ -44,6 +46,9 @@ class SolicitacaoDAO:
         cursor.execute(sql, (cpf,))
 
         records = cursor.fetchall()
+        if records is None:
+            return []
+
         solicitacoes = []
 
         for r in records:
@@ -67,6 +72,9 @@ class SolicitacaoDAO:
         cursor.execute(sql, (cpf,))
 
         records = cursor.fetchall()
+        if records is None:
+            return []
+            
         solicitacoes = []
 
         for r in records:

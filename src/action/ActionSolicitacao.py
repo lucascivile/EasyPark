@@ -25,20 +25,22 @@ class ActionSolicitacao:
     def list_by_motorista(cpf):
         solicitacaoDAO = SolicitacaoDAO()
         solicitacoesAsString = []
-            
+    
         try:
-            solicitacoes = solicitacaoDAO.listByCpfMotorista(cpf)
-
+            solicitacoes = solicitacaoDAO.list_by_cpf_motorista(cpf)
             for s in solicitacoes:
-                solicitacaoAsString = "id_solicitacao" + str(s.get_id_solicitacao()) + "\n" + \
-                                      "id_vaga" + str(s.get_id_vaga()) + "\n" + \
-                                      "inicio" + str(s.get_inicio()) + "\n" + \
-                                      "fim" + str(s.get_fim())
-
                 resposta = s.get_resposta()
+
                 if resposta is not None:
-                    solicitacaoAsString += "\nresposta: " + ("aceita" if resposta else "recusada")
-                
+                    solicitacaoAsString = repr({"id_solicitacao": s.get_id_solicitacao(),
+                                      "id_vaga": s.get_id_vaga(),
+                                      "inicio": s.get_inicio(), "fim": s.get_fim(),
+                                      "resposta": "aceita" if resposta else "recusada"})
+                else:
+                    solicitacaoAsString = repr({"id_solicitacao": s.get_id_solicitacao(),
+                                      "id_vaga": s.get_id_vaga(),
+                                      "inicio": s.get_inicio(), "fim": s.get_fim()})
+
                 solicitacoesAsString.append(solicitacaoAsString)
         except:
             return None
@@ -54,10 +56,9 @@ class ActionSolicitacao:
             solicitacoes = solicitacaoDAO.list_unanswered_by_cpf_proprietario(cpf)
 
             for s in solicitacoes:
-                solicitacaoAsString = "id_solicitacao" + str(s.get_id_solicitacao()) + "\n" + \
-                                      "id_vaga" + str(s.get_id_vaga()) + "\n" + \
-                                      "inicio" + str(s.get_inicio()) + "\n" + \
-                                      "fim" + str(s.get_fim())
+                solicitacaoAsString = repr({"id_solicitacao": s.get_id_solicitacao(),
+                                      "id_vaga": s.get_id_vaga(),
+                                      "inicio": s.get_inicio(), "fim": s.get_fim()})
 
                 solicitacoesAsString.append(solicitacaoAsString)
         except:

@@ -25,8 +25,10 @@ class AcordoDAO:
         cursor.execute(sql, (id_acordo,))
 
         record = cursor.fetchone()
-        acordo = Acordo()
+        if record is None:
+            return None
 
+        acordo = Acordo()
         acordo.set_id_acordo(record[0])
         acordo.set_id_solicitacao(record[1])
 
@@ -40,6 +42,9 @@ class AcordoDAO:
         cursor.execute(sql)
 
         records = cursor.fetchall()
+        if records is None:
+            return []
+            
         acordos = []
 
         for r in records:

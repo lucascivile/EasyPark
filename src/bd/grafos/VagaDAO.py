@@ -26,11 +26,12 @@ class VagaDAO:
 
     def list_by_agente_bairro(self, agente_cpf):
         def __list_by_agente_cpf_tx(tx, cpf):
-            return tx.run(
+            result = tx.run(
                 "MATCH (:Agente {cpf:$cpf})-[:FISCALIZA]->(:Bairro)<-[:ESTA_EM]-(v:Vaga) " +
-                "RETURN v.id_vaga, v.latitude, v.longitude;",
+                "RETURN v.id_vaga as id_vaga, v.latitude as latitude, v.longitude as longitude;",
                 cpf=cpf
             )
+            return [r for r in result]
 
         records = self.session.read_transaction(__list_by_agente_cpf_tx, agente_cpf)
         vagas = []

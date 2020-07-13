@@ -26,8 +26,10 @@ class ProprietarioDAO:
         cursor.execute(sql, (cpf_usuario,))
 
         record = cursor.fetchone()
+        if record is None:
+            return None
+            
         proprietario = Proprietario()
-
         proprietario.set_cpf_usuario(record[0])
         proprietario.set_logradouro(record[1])
         proprietario.set_numero(record[2])

@@ -27,6 +27,8 @@ class ActionVaga:
         vagaDAOGrafos = VagaDAOGrafos()
         vagaGrafos = VagaGrafos()
         vagaGrafos.set_bairro(bairro)
+        vagaGrafos.set_latitude(latitude)
+        vagaGrafos.set_longitude(longitude)
 
         try:
             id_vaga = vagaDAO.insert(vaga)
@@ -50,31 +52,28 @@ class ActionVaga:
             vagas = vagaDAO.list_free_by_location_and_time(user_cpf, latitude, longitude, inicio, fim)
             
             for v in vagas:
-                vagaAsString = "id_vaga: " + str(v.get_id_vaga()) + "\n" + \
-                               "latitude: " + str(v.get_latitude()) + "\n" + \
-                               "longitude: " + str(v.get_longitude()) + "\n" + \
-                               "largura: " + str(v.get_largura()) + "\n" + \
-                               "comprimento: " + str(v.get_comprimento())
+                vagaAsString = repr({"id_vaga": v.get_id_vaga(), "latitude": v.get_latitude(),
+                                      "longitude": v.get_longitude(), "largura": v.get_largura(),
+                                      "comprimento": v.get_comprimento()})
                 
                 vagasAsString.append(vagaAsString)
         except:
-            return None
+            return None, None
 
-        if len(vagaAsString):
-            return vagasAsString
+        if len(vagasAsString):
+            return vagasAsString, True
         else:
             estacionamentoDAOGrafos = EstacionamentoDAOGrafos()
             estacionamentos = estacionamentoDAOGrafos.list_by_coordinates(latitude, longitude)
             estacionamentosAsString = []
 
             for e in estacionamentos:
-                estacionamentoAsString = "nome: " + str(e.get_nome()) + "\n" + \
-                                         "latitude: " + str(v.get_latitude()) + "\n" + \
-                                         "longitude: " + str(v.get_longitude())
+                estacionamentoAsString = repr({"nome": e.get_nome(), "latitude": e.get_latitude(),
+                                                "longitude": e.get_longitude()})
                 
                 estacionamentosAsString.append(estacionamentoAsString)
 
-            return estacionamentosAsString
+            return estacionamentosAsString, False
 
     @staticmethod
     def list_by_agente_bairro(cpf):
@@ -85,9 +84,8 @@ class ActionVaga:
             vagas = vagaDAOGrafos.list_by_agente_bairro(cpf)
 
             for v in vagas:
-                vagaAsString = "id_vaga: " + str(v.get_id_vaga()) + "\n" + \
-                               "latitude: " + str(v.get_latitude()) + "\n" + \
-                               "longitude: " + str(v.get_longitude())
+                vagaAsString = repr({"id_vaga": v.get_id_vaga(), "latitude": v.get_latitude(),
+                                      "longitude": v.get_longitude()})
                 
                 vagasAsString.append(vagaAsString)
         except:
@@ -97,22 +95,35 @@ class ActionVaga:
 
     @staticmethod  
     def insert_avaliacao(id_vaga, cpf_agente, avaliacao, comentario):
-        vagaDAOdoc = VagaDAO()
-
+        print("db1")
+        vagaDAO = VagaDAO()
+        vagaDAOdoc = VagaDAODoc()
+        print("db2")
         try:
-            vagaDoc = vagaDAOdoc.get(id_vaga)
-            avaliacoes = vagaDoc.getAvaliacoes()
+            print("db3")
+            if avaliacao:
+                vaga = vagaDAO.get(id_vaga)
+                print("db10")
+                vaga.set_liberada(avaliacao)
+                vagaDAO.update(vaga)
+                print("db4")
 
+            print("db5")
+            vagaDoc = vagaDAOdoc.get(id_vaga)
+            avaliacoes = vagaDoc.get_avaliacoes()
+            print("db6")
             novaAvaliacao = AvaliacaoDoc()
             novaAvaliacao.set_cpf_agente(cpf_agente)
             novaAvaliacao.set_comentario(comentario)
             novaAvaliacao.set_resultado(avaliacao)
-
+            print("db7")
             avaliacoes.append(novaAvaliacao)
             vagaDoc.set_avaliacoes(avaliacoes)
-
+            print("db8")
             vagaDAOdoc.update(vagaDoc)
-        except:
+            print("db9")
+        except Exception as e:
+            print(e)
             return False
         else:
             return True

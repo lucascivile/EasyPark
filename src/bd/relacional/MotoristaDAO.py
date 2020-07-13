@@ -22,8 +22,10 @@ class MotoristaDAO:
         cursor.execute(sql, (cpf_usuario,))
 
         record = cursor.fetchone()
+        if record is None:
+            return None
+    
         motorista = Motorista()
-
         motorista.set_cpf_usuario(record[0])
         motorista.set_cnh(record[1])
 

@@ -46,11 +46,12 @@ class ActionAcordo:
 
                 now = datetime.datetime.now()
                 if s.get_cpf_motorista() == cpf and s.get_inicio() > now:
-                    acordoAsString = "id_acordo: " + str(a.get_id_acordo()) + "\n" + \
-                                     "id_solicitacao" + str(a.get_id_solicitacao()) + "\n" + \
-                                     "id_vaga" + str(s.get_id_vaga()) + "\n" + \
-                                     "inicio" + str(s.get_inicio()) + "\n" + \
-                                     "fim" + str(s.get_fim())
+                    acordoAsString = repr({"id_acordo": a.get_id_acordo(),
+                                      "id_solicitacao": a.get_id_solicitacao(),
+                                      "id_vaga": s.get_id_vaga(),
+                                      "inicio": s.get_inicio(),
+                                      "fim": s.get_fim()})
+
                     acordosAsString.append(acordoAsString)
         except:
             return None
@@ -71,11 +72,11 @@ class ActionAcordo:
 
                 now = datetime.datetime.now()
                 if s.get_cpf_motorista() == cpf and s.get_fim() < now:
-                    acordoAsString = "id_acordo: " + str(a.get_id_acordo()) + "\n" + \
-                                     "id_solicitacao" + str(a.get_id_solicitacao()) + "\n" + \
-                                     "id_vaga" + str(s.get_id_vaga()) + "\n" + \
-                                     "inicio" + str(s.get_inicio()) + "\n" + \
-                                     "fim" + str(s.get_fim())
+                    acordoAsString = repr({"id_acordo": a.get_id_acordo(),
+                                      "id_solicitacao": a.get_id_solicitacao(),
+                                      "id_vaga": s.get_id_vaga(),
+                                      "inicio": s.get_inicio(),
+                                      "fim": s.get_fim()})
                     acordosAsString.append(acordoAsString)
         except:
             return None
@@ -99,11 +100,11 @@ class ActionAcordo:
 
                 now = datetime.datetime.now()
                 if v.get_cpf_proprietario() == cpf and s.get_inicio() > now:
-                    acordoAsString = "id_acordo: " + str(a.get_id_acordo()) + "\n" + \
-                                     "id_solicitacao" + str(a.get_id_solicitacao()) + "\n" + \
-                                     "id_vaga" + str(s.get_id_vaga()) + "\n" + \
-                                     "inicio" + str(s.get_inicio()) + "\n" + \
-                                     "fim" + str(s.get_fim())
+                    acordoAsString = repr({"id_acordo": a.get_id_acordo(),
+                                      "id_solicitacao": a.get_id_solicitacao(),
+                                      "id_vaga": s.get_id_vaga(),
+                                      "inicio": s.get_inicio(),
+                                      "fim": s.get_fim()})
                     acordosAsString.append(acordoAsString)
         except:
             return None
@@ -126,11 +127,11 @@ class ActionAcordo:
 
                 now = datetime.datetime.now()
                 if v.get_cpf_proprietario() == cpf and s.get_fim() < now:
-                    acordoAsString = "id_acordo: " + str(a.get_id_acordo()) + "\n" + \
-                                     "id_solicitacao" + str(a.get_id_solicitacao()) + "\n" + \
-                                     "id_vaga" + str(s.get_id_vaga()) + "\n" + \
-                                     "inicio" + str(s.get_inicio()) + "\n" + \
-                                     "fim" + str(s.get_fim())
+                    acordoAsString = repr({"id_acordo": a.get_id_acordo(),
+                                      "id_solicitacao": a.get_id_solicitacao(),
+                                      "id_vaga": s.get_id_vaga(),
+                                      "inicio": s.get_inicio(),
+                                      "fim": s.get_fim()})
                     acordosAsString.append(acordoAsString)
         except:
             return None

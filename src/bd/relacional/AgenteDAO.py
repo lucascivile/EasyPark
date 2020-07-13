@@ -22,8 +22,10 @@ class AgenteDAO:
         cursor.execute(sql, (cpf_usuario,))
 
         record = cursor.fetchone()
-        agente = Agente()
+        if record is None:
+            return None
 
+        agente = Agente()
         agente.set_cpf_usuario(record[0])
         agente.set_registro_municipal(record[1])
 

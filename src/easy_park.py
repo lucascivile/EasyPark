@@ -31,7 +31,8 @@ def home_motorista_screen():
         print("Não conseguimos obter seus acordos futuros")
     elif len(future_acordos_details):
         print("Seus acordos futuros:")
-        print([acordo for acordo in future_acordos_details])
+        for acordo in future_acordos_details:
+            print(acordo)
 
     while selected_action not in [0, 1, 2, 3, 4, 5, 6]:
         print()
@@ -68,7 +69,8 @@ def home_motorista_screen():
         if solicitacoes_details is None:
             print("Não conseguimos listar suas solicitações")
         elif len(solicitacoes_details):
-            print([solicitacao for solicitacao in solicitacoes_details])
+            for solicitacao in solicitacoes_details:
+                print(solicitacao)
         else:
             print("Não há solicitações a listar")
     elif selected_action == 3:
@@ -80,17 +82,21 @@ def home_motorista_screen():
         latitude = float(input("Latitude desejada: "))
         longitude = float(input("Longitude desejada: "))
 
-        vagas_details, empty = ActionVaga.list_by_location_and_time(USER_CPF, inicio, fim, latitude, longitude)
+        vagas_details, vaga = ActionVaga.list_by_location_and_time(USER_CPF, inicio, fim, latitude, longitude)
 
         if vagas_details is None:
             print("Não conseguimos listar as vagas disponíveis")
         else:
-            if empty:
-                print("Não há vagas disponíveis, mas veja os estacionamentos próximos:")
+            if not vaga:
+                if len(vagas_details) > 0:
+                    print("Não há vagas disponíveis, mas veja os estacionamentos próximos:")
+                else:
+                    print("Não há vagas nem estacionamentos disponíveis próximos à localização desejada")
             
-            print([vaga for vaga in vagas_details])
+            for vaga in vagas_details:
+                print(vaga)
 
-            if not empty:
+            if len(vagas_details):
                 id_vaga = int(input("Digite o id da vaga desejada: "))
 
                 if ActionSolicitacao.insert(id_vaga, USER_CPF, inicio, fim):
@@ -103,7 +109,8 @@ def home_motorista_screen():
         if past_acordos_details is None:
             print("Não conseguimos listar seus acordos")
         else:
-            print([acordo for acordo in past_acordos_details])
+            for acordo in past_acordos_details:
+                print(acordo)
             id_acordo = int(input("Digite o id do acordo cujo proprietário você deseja avaliar: "))
 
             nota = 0
@@ -118,8 +125,10 @@ def home_motorista_screen():
         nota_media = ActionUsuario.get_nota_media(USER_CPF, "MOTORISTA")
         if nota_media is None:
             print("Não conseguimos obter sua nota média")
-        else:
+        elif nota_media != -1:
             print("Sua nota média é ", nota_media)
+        else:
+            print("Você ainda não recebeu notas")
     elif selected_action == 6:
         USER_CPF = None
         return "initial"
@@ -137,7 +146,8 @@ def home_proprietario_screen():
         print("Não conseguimos obter seus acordos futuros")
     elif len(future_acordos_details):
         print("Seus acordos futuros:")
-        print([acordo for acordo in future_acordos_details])
+        for acordo in future_acordos_details:
+            print(acordo)
 
     solicitacoes_details = ActionSolicitacao.list_unanswered_by_proprietario(USER_CPF)
 
@@ -194,7 +204,8 @@ def home_proprietario_screen():
         if solicitacoes_details is None:
             print("Não conseguimos listar as solicitacoes")
         else:
-            print([solicitacao for solicitacao in solicitacoes_details])
+            for solicitacao in solicitacoes_details:
+                print(solicitacao)
             id_solicitacao = int(input("Digite o id da solicitação a que deseja responder: "))
 
             resposta = None
@@ -215,7 +226,9 @@ def home_proprietario_screen():
         if past_acordos_details is None:
             print("Não conseguimos listar seus acordos")
         else:
-            print(acordo for acordo in past_acordos_details)
+            for acordo in past_acordos_details:
+                print(acordo)
+
             id_acordo = int(input("Digite o id do acordo cujo motorista você deseja avaliar: "))
 
             nota = 0
@@ -230,8 +243,10 @@ def home_proprietario_screen():
         nota_media = ActionUsuario.get_nota_media(USER_CPF, "PROPRIETARIO")
         if nota_media is None:
             print("Não conseguimos obter sua nota média")
-        else:
+        elif nota_media != -1:
             print("Sua nota média é ", nota_media)
+        else:
+            print("Você ainda não recebeu notas")
     elif selected_action == 6:
         USER_CPF = None
         return "initial"
@@ -275,7 +290,8 @@ def home_agente_screen():
         elif len(vagas_details) == 0:
             print("Não há vagas no bairro deste agente")
         else:
-            print([vaga for vaga in vagas_details])
+            for vaga in vagas_details:
+                print(vaga)
     elif selected_action == 3:
         id_vaga = int(input("Selecione a vaga pelo id: "))
 

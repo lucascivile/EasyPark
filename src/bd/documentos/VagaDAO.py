@@ -8,7 +8,7 @@ class VagaDAO:
 
     def insert(self, vaga):
         self.collection.insert_one({
-            "id_vaga": vaga.id_vaga(),
+            "id_vaga": vaga.get_id_vaga(),
             "avaliacoes": [],
             "acordos": []
         })
@@ -21,7 +21,7 @@ class VagaDAO:
                 "nota_mp": a.get_nota_MP(),
                 "nota_pm": a.get_nota_PM()
             })
-        self.collection.update_one({"id_vaga", vaga.get_id_vaga()}, {"$set": {"acordos": acordos_formatted}})
+        self.collection.update_one({"id_vaga": vaga.get_id_vaga()}, {"$set": {"acordos": acordos_formatted}})
 
         avaliacoes_formatted = []
         for a in vaga.get_avaliacoes():
@@ -30,7 +30,7 @@ class VagaDAO:
                 "cpf_agente": a.get_cpf_agente(),
                 "resultado": a.get_resultado()
             })
-        self.collection.update_one({"id_vaga", vaga.get_id_vaga()}, {"$set": {"avaliacoes": avaliacoes_formatted}})
+        self.collection.update_one({"id_vaga": vaga.get_id_vaga()}, {"$set": {"avaliacoes": avaliacoes_formatted}})
         
     def get(self, id_vaga):
         doc = self.collection.find_one({"id_vaga": id_vaga})

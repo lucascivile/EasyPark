@@ -23,8 +23,10 @@ class UsuarioDAO:
         cursor.execute(sql, (email, senha))
 
         record = cursor.fetchone()
+        if record is None:
+            return None
+            
         usuario = Usuario()
-
         usuario.set_cpf(record[0])
         usuario.set_nome(record[1])
         usuario.set_email(record[2])

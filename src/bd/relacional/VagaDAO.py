@@ -10,9 +10,9 @@ class VagaDAO:
         cursor = self.connection.cursor()
 
         sql = "insert into vaga " + \
-              "(cpf_proprietario,liberada,latitude,longitude,largura,comprimento,preco_hora) " +\
-              "values (%s,%s,%s,%s,%s,%s,%s) returning id_vaga"
-        cursor.execute(sql, (vaga.get_cpf_proprietario(), vaga.get_liberada(),
+              "(cpf_proprietario,latitude,longitude,largura,comprimento,preco_hora) " +\
+              "values (%s,%s,%s,%s,%s,%s) returning id_vaga"
+        cursor.execute(sql, (vaga.get_cpf_proprietario(),
                              vaga.get_latitude(), vaga.get_longitude(), vaga.get_largura(),
                              vaga.get_comprimento(), vaga.get_preco()))
 
@@ -29,8 +29,10 @@ class VagaDAO:
         cursor.execute(sql, (id_vaga,))
 
         record = cursor.fetchone()
-        vaga = Vaga()
+        if record is None:
+            return None
 
+        vaga = Vaga()
         vaga.set_id_vaga(record[0])
         vaga.set_cpf_proprietario(record[1])
         vaga.set_preco(record[2])
@@ -42,6 +44,15 @@ class VagaDAO:
 
         cursor.close()
         return vaga
+
+    def update(self, vaga):
+        cursor = self.connection.cursor()
+
+        sql = "update vaga set liberada=%s where id_vaga=%s"
+        cursor.execute(sql, (vaga.get_liberada(), vaga.get_id_vaga()))
+
+        self.connection.commit()
+        cursor.close()
 
     def list_free_by_location_and_time(self, user_cpf, latitude, longitude, inicio, fim):
         cursor = self.connection.cursor()
@@ -57,6 +68,9 @@ class VagaDAO:
         cursor.execute(sql, (user_cpf, latitude, longitude, inicio, fim))
 
         records = cursor.fetchall()
+        if records is None:
+            return []
+
         vagas = []
 
         for r in records:
