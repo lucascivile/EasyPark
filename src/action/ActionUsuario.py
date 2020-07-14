@@ -246,6 +246,16 @@ class ActionUsuario:
             return -1
 
     @staticmethod
+    def get_bairro_agente(cpf):
+        agenteDAOGrafos = AgenteDAOGrafos()
+
+        try:
+            agenteGrafos = agenteDAOGrafos.get(cpf)
+            return agenteGrafos.get_bairro()
+        except:
+            return None
+
+    @staticmethod
     def update_endereco_proprietario(cpf, logradouro, numero, complemento, cep):
         proprietarioDAO = ProprietarioDAO()
 

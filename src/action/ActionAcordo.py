@@ -35,7 +35,7 @@ class ActionAcordo:
     @staticmethod
     def list_future_by_motorista(cpf):
         acordoDAO = AcordoDAO()
-        acordosAsString = []
+        acordo_output = []
         
         try:
             acordos = acordoDAO.list()
@@ -46,22 +46,22 @@ class ActionAcordo:
 
                 now = datetime.datetime.now()
                 if s.get_cpf_motorista() == cpf and s.get_inicio() > now:
-                    acordoAsString = repr({"id_acordo": a.get_id_acordo(),
+                    acordo = {"id_acordo": a.get_id_acordo(),
                                       "id_solicitacao": a.get_id_solicitacao(),
                                       "id_vaga": s.get_id_vaga(),
                                       "inicio": s.get_inicio(),
-                                      "fim": s.get_fim()})
+                                      "fim": s.get_fim()}
 
-                    acordosAsString.append(acordoAsString)
+                    acordo_output.append(acordo)
         except:
             return None
         else:
-            return acordosAsString
+            return acordo_output
 
     @staticmethod
     def list_past_by_motorista(cpf):
         acordoDAO = AcordoDAO()
-        acordosAsString = []
+        acordos_output = []
         
         try:
             acordos = acordoDAO.list()
@@ -72,22 +72,22 @@ class ActionAcordo:
 
                 now = datetime.datetime.now()
                 if s.get_cpf_motorista() == cpf and s.get_fim() < now:
-                    acordoAsString = repr({"id_acordo": a.get_id_acordo(),
+                    acordo = {"id_acordo": a.get_id_acordo(),
                                       "id_solicitacao": a.get_id_solicitacao(),
                                       "id_vaga": s.get_id_vaga(),
                                       "inicio": s.get_inicio(),
-                                      "fim": s.get_fim()})
-                    acordosAsString.append(acordoAsString)
+                                      "fim": s.get_fim()}
+                    acordos_output.append(acordo)
         except:
             return None
         else:
-            return acordosAsString
+            return acordos_output
 
     
     @staticmethod
     def list_future_by_proprietario(cpf):
         acordoDAO = AcordoDAO()
-        acordosAsString = []
+        acordos_output = []
         
         try:
             acordos = acordoDAO.list()
@@ -100,21 +100,21 @@ class ActionAcordo:
 
                 now = datetime.datetime.now()
                 if v.get_cpf_proprietario() == cpf and s.get_inicio() > now:
-                    acordoAsString = repr({"id_acordo": a.get_id_acordo(),
+                    acordo = {"id_acordo": a.get_id_acordo(),
                                       "id_solicitacao": a.get_id_solicitacao(),
                                       "id_vaga": s.get_id_vaga(),
                                       "inicio": s.get_inicio(),
-                                      "fim": s.get_fim()})
-                    acordosAsString.append(acordoAsString)
+                                      "fim": s.get_fim()}
+                    acordos_output.append(acordo)
         except:
             return None
         else:
-            return acordosAsString
+            return acordos_output
 
     @staticmethod
     def list_past_by_proprietario(cpf):
         acordoDAO = AcordoDAO()
-        acordosAsString = []
+        acordos_output = []
         
         try:
             acordos = acordoDAO.list()
@@ -127,16 +127,16 @@ class ActionAcordo:
 
                 now = datetime.datetime.now()
                 if v.get_cpf_proprietario() == cpf and s.get_fim() < now:
-                    acordoAsString = repr({"id_acordo": a.get_id_acordo(),
+                    acordo = {"id_acordo": a.get_id_acordo(),
                                       "id_solicitacao": a.get_id_solicitacao(),
                                       "id_vaga": s.get_id_vaga(),
                                       "inicio": s.get_inicio(),
-                                      "fim": s.get_fim()})
-                    acordosAsString.append(acordoAsString)
+                                      "fim": s.get_fim()}
+                    acordos_output.append(acordo)
         except:
             return None
         else:
-            return acordosAsString
+            return acordos_output
 
     @staticmethod
     def insert_nota_to_proprietario(id_acordo, nota):
