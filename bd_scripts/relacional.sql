@@ -130,7 +130,7 @@ CREATE OR REPLACE FUNCTION checa_perfil_do_proprietario()
   RETURNS trigger AS $checa_perfil_do_proprietario$
 BEGIN
 	IF EXISTS(SELECT 1
-               FROM agente AS a
+               FROM agente_municipal AS a
                WHERE a.cpf_usuario = NEW.cpf_usuario) THEN
           RAISE EXCEPTION 'Já existe um agente com esse CPF';
           ROLLBACK;
@@ -150,7 +150,7 @@ CREATE OR REPLACE FUNCTION checa_perfil_do_motorista()
   RETURNS trigger AS $checa_perfil_do_motorista$
 BEGIN
 	IF EXISTS(SELECT 1
-               FROM agente AS a
+               FROM agente_municipal AS a
                WHERE a.cpf_usuario = NEW.cpf_usuario) THEN
           RAISE EXCEPTION 'Já existe um agente com esse CPF';
           ROLLBACK;
@@ -187,7 +187,7 @@ INSERT INTO vaga VALUES (DEFAULT, '12345678903', 12.99, 98.76, -67.89, 5.0, 9.84
 
 INSERT INTO solicitacao VALUES (DEFAULT, '12345678902', 3, '2020-06-04 04:50:00', '2020-06-04 05:50:00', FALSE);
 INSERT INTO solicitacao VALUES (DEFAULT, '12345678902', 1, '2020-05-10 17:48:00', '2020-05-10 18:02:00', TRUE);
-INSERT INTO solicitacao VALUES (DEFAULT, '12345678903', 2, '2020-08-23 13:28:00', '2019-08-23 13:58:00');
+INSERT INTO solicitacao VALUES (DEFAULT, '12345678903', 2, '2020-08-23 13:28:00', '2020-08-23 13:58:00');
 INSERT INTO solicitacao VALUES (DEFAULT, '12345678903', 1, '2019-08-19 15:10:00', '2019-08-19 16:00:00', TRUE);
 
 INSERT INTO acordo VALUES (DEFAULT, 2);

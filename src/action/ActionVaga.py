@@ -106,10 +106,12 @@ class ActionVaga:
 
             vagaDoc = vagaDAOdoc.get(id_vaga)
             avaliacoes = vagaDoc.get_avaliacoes()
+
             novaAvaliacao = AvaliacaoDoc()
             novaAvaliacao.set_cpf_agente(cpf_agente)
             novaAvaliacao.set_comentario(comentario)
             novaAvaliacao.set_resultado(avaliacao)
+            
             avaliacoes.append(novaAvaliacao)
             vagaDoc.set_avaliacoes(avaliacoes)
             vagaDAOdoc.update(vagaDoc)

@@ -28,9 +28,9 @@ def home_motorista_screen():
     future_acordos_details = ActionAcordo.list_future_by_motorista(USER_CPF)
 
     if future_acordos_details is None:
-        print("Não conseguimos obter seus acordos futuros")
+        print("\nNão conseguimos obter seus acordos futuros")
     elif len(future_acordos_details):
-        print("Seus acordos futuros:")
+        print("\nSeus acordos futuros:")
         for acordo in future_acordos_details:
             print(acordo)
 
@@ -60,19 +60,19 @@ def home_motorista_screen():
         placa = input("Placa: ")
 
         if ActionVeiculo.insert(USER_CPF, modelo, ano, cor, placa):
-            print("Veículo adicionado com sucesso!")
+            print("\nVeículo adicionado com sucesso!")
         else:
-            print("Não conseguimos adicionar este veículo")
+            print("\nNão conseguimos adicionar este veículo")
     elif selected_action == 2:
         solicitacoes_details = ActionSolicitacao.list_by_motorista(USER_CPF)
 
         if solicitacoes_details is None:
-            print("Não conseguimos listar suas solicitações")
+            print("\nNão conseguimos listar suas solicitações")
         elif len(solicitacoes_details):
             for solicitacao in solicitacoes_details:
                 print(solicitacao)
         else:
-            print("Não há solicitações a listar")
+            print("\nNão há solicitações a listar")
     elif selected_action == 3:
         date_fmt = "%d/%m/%Y %H:%M"
 
@@ -85,13 +85,13 @@ def home_motorista_screen():
         vagas_details, vaga = ActionVaga.list_by_location_and_time(USER_CPF, inicio, fim, latitude, longitude)
 
         if vagas_details is None:
-            print("Não conseguimos listar as vagas disponíveis")
+            print("\nNão conseguimos listar as vagas disponíveis")
         else:
             if not vaga:
                 if len(vagas_details) > 0:
-                    print("Não há vagas disponíveis, mas veja os estacionamentos próximos:")
+                    print("\nNão há vagas disponíveis, mas veja os estacionamentos próximos:")
                 else:
-                    print("Não há vagas nem estacionamentos disponíveis próximos à localização desejada")
+                    print("\nNão há vagas nem estacionamentos disponíveis próximos à localização desejada")
             
             for vaga in vagas_details:
                 print(vaga)
@@ -100,14 +100,14 @@ def home_motorista_screen():
                 id_vaga = int(input("Digite o id da vaga desejada: "))
 
                 if ActionSolicitacao.insert(id_vaga, USER_CPF, inicio, fim):
-                    print("Solicitação realizada com sucesso!")
+                    print("\nSolicitação realizada com sucesso!")
                 else:
-                    print("Não conseguimos realizar a sua solicitação")
+                    print("\nNão conseguimos realizar a sua solicitação")
     elif selected_action == 4:
         past_acordos_details = ActionAcordo.list_past_by_motorista(USER_CPF)
 
         if past_acordos_details is None:
-            print("Não conseguimos listar seus acordos")
+            print("\nNão conseguimos listar seus acordos")
         else:
             for acordo in past_acordos_details:
                 print(acordo)
@@ -118,17 +118,17 @@ def home_motorista_screen():
                 nota = int(input("Avalie com uma nota de 1 a 5: "))
 
             if ActionAcordo.insert_nota_to_proprietario(id_acordo, nota):
-                print("Nota registrada com sucesso!")
+                print("\nNota registrada com sucesso!")
             else:
-                print("Não conseguimos registrar sua nota")
+                print("\nNão conseguimos registrar sua nota")
     elif selected_action == 5:
         nota_media = ActionUsuario.get_nota_media(USER_CPF, "MOTORISTA")
         if nota_media is None:
-            print("Não conseguimos obter sua nota média")
+            print("\nNão conseguimos obter sua nota média")
         elif nota_media != -1:
-            print("Sua nota média é ", nota_media)
+            print("\nSua nota média é ", nota_media)
         else:
-            print("Você ainda não recebeu notas")
+            print("\nVocê ainda não recebeu notas")
     elif selected_action == 6:
         USER_CPF = None
         return "initial"
@@ -143,18 +143,18 @@ def home_proprietario_screen():
     future_acordos_details = ActionAcordo.list_future_by_proprietario(USER_CPF)
 
     if future_acordos_details is None:
-        print("Não conseguimos obter seus acordos futuros")
+        print("\nNão conseguimos obter seus acordos futuros")
     elif len(future_acordos_details):
-        print("Seus acordos futuros:")
+        print("\nSeus acordos futuros:")
         for acordo in future_acordos_details:
             print(acordo)
 
     solicitacoes_details = ActionSolicitacao.list_unanswered_by_proprietario(USER_CPF)
 
     if solicitacoes_details is None:
-        print("Não conseguimos obter as solicitações para suas vagas")
+        print("\nNão conseguimos obter as solicitações para suas vagas")
     elif len(solicitacoes_details):
-        print("Você tem uma ou mais solicitações de vaga para responder")
+        print("\nVocê tem uma ou mais solicitações de vaga para responder")
 
     while selected_action not in [0, 1, 2, 3, 4, 5, 6]:
         print()
@@ -182,9 +182,9 @@ def home_proprietario_screen():
         cep = input("Novo CEP (somente dígitos): ")
 
         if ActionUsuario.update_endereco_proprietario(USER_CPF, logradouro, numero, complemento, cep):
-            print("Endereço atualizado com sucesso!")
+            print("\nEndereço atualizado com sucesso!")
         else:
-            print("Não conseguimos atualizar o seu endereço")
+            print("\nNão conseguimos atualizar o seu endereço")
     elif selected_action == 2: 
         bairro = input("Bairro da vaga: ")
         latitude = float(input("Latitude: "))
@@ -194,15 +194,15 @@ def home_proprietario_screen():
         preco = float(input("Preço por hora: "))
 
         if ActionVaga.insert(USER_CPF, bairro, latitude, longitude, largura, comprimento, preco):
-            print("Vaga adicionada com sucesso!")
+            print("\nVaga adicionada com sucesso!")
             print("Lembre-se de que ela só poderá ser disponibilizada após a aprovação de um agente municipal")
         else:
-            print("Não conseguimos adicionar esta vaga")
+            print("\nNão conseguimos adicionar esta vaga")
     elif selected_action == 3:
         solicitacoes_details = ActionSolicitacao.list_unanswered_by_proprietario(USER_CPF)
 
         if solicitacoes_details is None:
-            print("Não conseguimos listar as solicitacoes")
+            print("\nNão conseguimos listar as solicitacoes")
         else:
             for solicitacao in solicitacoes_details:
                 print(solicitacao)
@@ -217,14 +217,14 @@ def home_proprietario_screen():
                     resposta = False
 
             if ActionSolicitacao.update_resposta(id_solicitacao, USER_CPF, resposta):
-                print("Resposta registrada com sucesso!")
+                print("\nResposta registrada com sucesso!")
             else:
-                print("Não conseguimos registrar sua resposta")
+                print("\nNão conseguimos registrar sua resposta")
     elif selected_action == 4:
         past_acordos_details = ActionAcordo.list_past_by_proprietario(USER_CPF)
 
         if past_acordos_details is None:
-            print("Não conseguimos listar seus acordos")
+            print("\nNão conseguimos listar seus acordos")
         else:
             for acordo in past_acordos_details:
                 print(acordo)
@@ -236,17 +236,17 @@ def home_proprietario_screen():
                 nota = int(input("Avalie com uma nota de 1 a 5: "))
 
             if ActionAcordo.insert_nota_to_motorista(id_acordo, nota):
-                print("Nota registrada com sucesso!")
+                print("\nNota registrada com sucesso!")
             else:
-                print("Não conseguimos registrar sua nota")
+                print("\nNão conseguimos registrar sua nota")
     elif selected_action == 5:
         nota_media = ActionUsuario.get_nota_media(USER_CPF, "PROPRIETARIO")
         if nota_media is None:
-            print("Não conseguimos obter sua nota média")
+            print("\nNão conseguimos obter sua nota média")
         elif nota_media != -1:
-            print("Sua nota média é ", nota_media)
+            print("\nSua nota média é ", nota_media)
         else:
-            print("Você ainda não recebeu notas")
+            print("\nVocê ainda não recebeu notas")
     elif selected_action == 6:
         USER_CPF = None
         return "initial"
@@ -279,16 +279,16 @@ def home_agente_screen():
         bairro = input("Novo bairro: ")
 
         if ActionUsuario.update_bairro_agente(USER_CPF, bairro):
-            print("Bairro atualizado com sucesso!")
+            print("\nBairro atualizado com sucesso!")
         else:
-            print("Não conseguimos atualizar o bairro")
+            print("\nNão conseguimos atualizar o bairro")
     elif selected_action == 2:
         vagas_details = ActionVaga.list_by_agente_bairro(USER_CPF)
 
         if vagas_details is None:
-            print("Não conseguimos listar as vagas")
+            print("\nNão conseguimos listar as vagas")
         elif len(vagas_details) == 0:
-            print("Não há vagas no bairro deste agente")
+            print("\nNão há vagas no bairro deste agente")
         else:
             for vaga in vagas_details:
                 print(vaga)
@@ -306,9 +306,9 @@ def home_agente_screen():
         comentario = input("Comentário (pressione enter se não houver): ")
 
         if ActionVaga.insert_avaliacao(id_vaga, USER_CPF, avaliacao, comentario):
-            print("Avaliação realizada com sucesso!")
+            print("\nAvaliação realizada com sucesso!")
         else:
-            print("Não conseguimos adicionar esta avaliação")
+            print("\nNão conseguimos adicionar esta avaliação")
     elif selected_action == 4:
         USER_CPF = None
         return "initial"
@@ -343,9 +343,9 @@ def signup_screen():
         bairro = input("Bairro de atuação: ")
 
         if ActionUsuario.insert_agente(nome, cpf, email, senha, nascimento, registro_municipal, bairro):
-            print("Agente cadastrado com sucesso!")
+            print("\nAgente cadastrado com sucesso!")
         else:
-            print("Não conseguimos cadastrar este agente")
+            print("\nNão conseguimos cadastrar este agente")
     elif user_type == 2:
         logradouro = input("Logradouro do endereço (ex.: Avenida Paulista): ")
         numero = input("Número do endereço: ")
@@ -353,16 +353,16 @@ def signup_screen():
         cep = input("CEP (somente dígitos): ")
 
         if ActionUsuario.insert_proprietario(nome, cpf, email, senha, nascimento, logradouro, numero, complemento, cep):
-            print("Proprietário cadastrado com sucesso!")
+            print("\nProprietário cadastrado com sucesso!")
         else:
-            print("Não conseguimos cadastrar este proprietário")
+            print("\nNão conseguimos cadastrar este proprietário")
     elif user_type == 3:
         cnh = input("Número da CNH (somente dígitos): ")
 
         if ActionUsuario.insert_motorista(nome, cpf, email, senha, nascimento, cnh):
-            print("Motorista cadastrado com sucesso!")
+            print("\nMotorista cadastrado com sucesso!")
         else:
-            print("Não conseguimos cadastrar este motorista")
+            print("\nNão conseguimos cadastrar este motorista")
     elif user_type == 4:
         logradouro = input("Logradouro do endereço (ex.: Avenida Paulista): ")
         numero = input("Número do endereço: ")
@@ -371,9 +371,9 @@ def signup_screen():
         cnh = input("Número da CNH (somente dígitos): ")
 
         if ActionUsuario.insert_proprietario_motorista(nome, cpf, email, senha, nascimento, logradouro, numero, complemento, cep, cnh):
-            print("Proprietário/motorista cadastrado com sucesso!")
+            print("\nProprietário/motorista cadastrado com sucesso!")
         else:
-            print("Não conseguimos cadastrar este proprietário/motorista")
+            print("\nNão conseguimos cadastrar este proprietário/motorista")
 
     return "initial"
 
@@ -386,7 +386,7 @@ def login_screen():
     USER_CPF, user_type = ActionUsuario.login(email, senha)
     
     if USER_CPF is None:
-        print("Não encontramos um usuário com as credenciais fornecidas!")
+        print("\nNão encontramos um usuário com as credenciais fornecidas!")
         return "initial"
 
     return "home_" + user_type
@@ -394,6 +394,14 @@ def login_screen():
 
 def initial_screen():
     selected_navigation = -1
+
+    print("""   
+          ███████  █████  ███████ ██    ██ ██████   █████  ██████  ██   ██ 
+          ██      ██   ██ ██       ██  ██  ██   ██ ██   ██ ██   ██ ██  ██  
+          █████   ███████ ███████   ████   ██████  ███████ ██████  █████   
+          ██      ██   ██      ██    ██    ██      ██   ██ ██   ██ ██  ██  
+          ███████ ██   ██ ███████    ██    ██      ██   ██ ██   ██ ██   ██             
+    """)
 
     while selected_navigation not in [0, 1, 2]:
         print()
@@ -433,7 +441,7 @@ def main():
         elif navigation == "home_proprietario_motorista":
             navigation = home_proprietario_motorista_screen()
         elif navigation == "exit_system":
-            print("Até mais, e obrigado pelos peixes!")
+            print("\nAté mais, e obrigado pelos peixes!")
             sys.exit(0)
 
 main()

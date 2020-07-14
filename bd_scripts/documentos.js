@@ -10,7 +10,9 @@ db.usuarios.insert(
         "nota_mp": 5
       },
       {
-        "id_acordo": 2
+        "id_acordo": 2,
+        "nota_pm": null,
+        "nota_mp": null
       }
     ]
   }
@@ -34,7 +36,9 @@ db.usuarios.insert(
     "cpf": "12345678903",
     "acordos": [
       {
-        "id_acordo": 2
+        "id_acordo": 2,
+        "nota_pm": null, 
+        "nota_mp": null
       }
     ]
   }
@@ -50,7 +54,9 @@ db.vagas.insert(
         "nota_mp": 5
       },
       {
-        "id_acordo": 2
+        "id_acordo": 2,
+        "nota_pm": null,
+        "nota_mp": null
       }
     ],
     "avaliacoes": [
@@ -61,7 +67,8 @@ db.vagas.insert(
       },
       {
         "cpf_agente": '12345678904',
-        "resultado": true
+        "resultado": true,
+        "comentario": null
       }
     ]
   }
@@ -74,7 +81,8 @@ db.vagas.insert(
     "avaliacoes": [
       {
         "cpf_agente": '12345678904',
-        "resultado": true
+        "resultado": true,
+        "comentario": null
       }
     ]
   }
@@ -87,7 +95,8 @@ db.vagas.insert(
     "avaliacoes": [
       {
         "cpf_agente": '12345678904',
-        "resultado": true
+        "resultado": true,
+        "comentario": null
       }
     ]
   }
