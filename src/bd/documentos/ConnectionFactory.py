@@ -4,7 +4,7 @@ class ConnectionFactory:
 
     HOST = "localhost"
     PORT = 27017
-    DB = "easypark"
+    DB = "ep3_documento"
 
     connection_factory = None
 

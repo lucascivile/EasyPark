@@ -2,9 +2,9 @@ from neo4j import GraphDatabase
 
 class ConnectionFactory:
 
-    URI = "bolt://localhost:7687"
+    URI = "bolt://localhost:7474"
     USER = "neo4j"
-    PASSWORD = "easypark"
+    PASSWORD = "ep3_grafo"
     
     connection_factory = None
 
