@@ -1,0 +1,34 @@
+version: '3.5'
+
+services:
+
+  db_postgres:
+    image: postgres
+    container_name: "ep3_relacional"
+    environment:
+      POSTGRES_USER: ep3_relacional
+      POSTGRES_PASSWORD: ep3_relacional
+      POSTGRES_DB: ep3
+    ports:
+      - 5432:5432
+
+  db_mongo:
+    image: mongo
+    container_name: "ep3_documento"
+    environment:
+      MONGO_INITDB_DATABASE: easypark
+      MONGO_INITDB_ROOT_USERNAME: ep3_documento
+      MONGO_INITDB_ROOT_PASSWORD: ep3_documento
+    ports:
+      - 27017:27017
+
+  db_neo4j:
+    image: neo4j
+    hostname: neo4j
+    container_name: "ep3_grafo"
+    environment:
+      NEO4J_AUTH: neo4j/ep3_grafo
+      NEO4J_dbms_logs_debug_level: DEBUG
+    ports:
+      - "7474:7474"
+      - "7687:7687"

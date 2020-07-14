@@ -3,10 +3,10 @@ import psycopg2
 class ConnectionFactory:
 
     HOST = "localhost"
-    DB = "lnagamine"
-    USER = "lnagamine"
+    DB = "ep3"
+    USER = "ep3_relacional"
     PORT = 5432
-    PASSWORD = None
+    PASSWORD = "ep3_relacional"
     
     connection_factory = None
 

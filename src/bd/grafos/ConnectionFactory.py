@@ -4,7 +4,7 @@ class ConnectionFactory:
 
     URI = "bolt://localhost:7687"
     USER = "neo4j"
-    PASSWORD = "easypark"
+    PASSWORD = "ep3_grafo"
     
     connection_factory = None
 
