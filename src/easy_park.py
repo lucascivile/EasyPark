@@ -46,7 +46,14 @@ def home_motorista_screen():
     elif len(future_acordos_details):
         print("\nSeus acordos futuros:")
         for acordo in future_acordos_details:
-            print(acordo)
+            print("id:", acordo["id_acordo"])
+            print("id da solicitação:", acordo["id_solicitacao"])
+            print("id da vaga:", acordo["id_vaga"])
+            print("início:", acordo["inicio"].strftime("%d/%m/%Y, %H:%M"))
+            print("fim:", acordo["fim"].strftime("%d/%m/%Y, %H:%M"))
+            print()
+    else:
+        print("\nAviso: você não possui acordos futuros")
 
     while selected_action not in [0, 1, 2, 3, 4, 5, 6]:
         print()
@@ -112,6 +119,7 @@ def home_motorista_screen():
                 print("id:", vaga["id_vaga"])
                 print("latitude:", vaga["latitude"])
                 print("longitude:", vaga["longitude"])
+                print("preço da hora:", vaga["preco"])
                 print()
 
             id_vaga = request_int(("Digite o id da vaga desejada: "))
@@ -135,9 +143,16 @@ def home_motorista_screen():
 
         if past_acordos_details is None:
             print("\nNão conseguimos listar seus acordos")
-        else:
+        elif len(past_acordos_details):
+            print("\nSeus acordos realizados:")
             for acordo in past_acordos_details:
-                print(acordo)
+                print("id:", acordo["id_acordo"])
+                print("id da solicitação:", acordo["id_solicitacao"])
+                print("id da vaga:", acordo["id_vaga"])
+                print("início:", acordo["inicio"].strftime("%d/%m/%Y, %H:%M"))
+                print("fim:", acordo["fim"].strftime("%d/%m/%Y, %H:%M"))
+                print()
+
             id_acordo = request_int(("Digite o id do acordo cujo proprietário você deseja avaliar: "))
 
             nota = 0
@@ -148,6 +163,8 @@ def home_motorista_screen():
                 print("\nNota registrada com sucesso!")
             else:
                 print("\nNão conseguimos registrar sua nota")
+        else:
+            print("\nVocê não possui acordos realizados")
     elif selected_action == 5:
         nota_media = ActionUsuario.get_nota_media(USER_CPF, "MOTORISTA")
         if nota_media is None:
@@ -174,7 +191,14 @@ def home_proprietario_screen():
     elif len(future_acordos_details):
         print("\nSeus acordos futuros:")
         for acordo in future_acordos_details:
-            print(acordo)
+            print("id:", acordo["id_acordo"])
+            print("id da solicitação:", acordo["id_solicitacao"])
+            print("id da vaga:", acordo["id_vaga"])
+            print("início:", acordo["inicio"].strftime("%d/%m/%Y, %H:%M"))
+            print("fim:", acordo["fim"].strftime("%d/%m/%Y, %H:%M"))
+            print()
+    else:
+        print("\nAviso: você não possui acordos futuros")
 
     solicitacoes_details = ActionSolicitacao.list_unanswered_by_proprietario(USER_CPF)
 
@@ -261,9 +285,15 @@ def home_proprietario_screen():
 
         if past_acordos_details is None:
             print("\nNão conseguimos listar seus acordos")
-        else:
+        elif len(past_acordos_details):
+            print("\nSeus acordos realizados:")
             for acordo in past_acordos_details:
-                print(acordo)
+                print("id:", acordo["id_acordo"])
+                print("id da solicitação:", acordo["id_solicitacao"])
+                print("id da vaga:", acordo["id_vaga"])
+                print("início:", acordo["inicio"].strftime("%d/%m/%Y, %H:%M"))
+                print("fim:", acordo["fim"].strftime("%d/%m/%Y, %H:%M"))
+                print()
 
             id_acordo = request_int(("Digite o id do acordo cujo motorista você deseja avaliar: "))
 
@@ -275,6 +305,8 @@ def home_proprietario_screen():
                 print("\nNota registrada com sucesso!")
             else:
                 print("\nNão conseguimos registrar sua nota")
+        else:
+            print("\nVocê não possui acordos realizados")
     elif selected_action == 5:
         nota_media = ActionUsuario.get_nota_media(USER_CPF, "PROPRIETARIO")
         if nota_media is None:

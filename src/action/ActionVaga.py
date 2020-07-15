@@ -54,7 +54,7 @@ class ActionVaga:
             for v in vagas:
                 vaga = {"id_vaga": v.get_id_vaga(), "latitude": v.get_latitude(),
                                       "longitude": v.get_longitude(), "largura": v.get_largura(),
-                                      "comprimento": v.get_comprimento()}
+                                      "comprimento": v.get_comprimento(), "preco": v.get_preco()}
                 
                 vagas_output.append(vaga)
         except:
