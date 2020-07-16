@@ -8,7 +8,7 @@ class VagaDAO:
 
     def insert(self, vaga):
         def __insert_bairro_if_not_exists(tx, bairro):
-            tx.run("MERGE (:Bairro {nome:$bairro});")
+            tx.run("MERGE (:Bairro {nome:$bairro});", bairro=bairro)
 
         def __insert_vaga_tx(tx, id_vaga, latitude, longitude):
             tx.run(
