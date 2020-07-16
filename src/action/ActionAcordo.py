@@ -66,9 +66,11 @@ class ActionAcordo:
         try:
             acordos = acordoDAO.list()
             solicitacaoDAO = SolicitacaoDAO()
+            vagaDAO = VagaDAO()
 
             for a in acordos:
                 s = solicitacaoDAO.get(a.get_id_solicitacao())
+                v = vagaDAO.get(s.get_id_vaga())
 
                 now = datetime.datetime.now()
                 if s.get_cpf_motorista() == cpf and s.get_fim() < now:
@@ -76,7 +78,8 @@ class ActionAcordo:
                                       "id_solicitacao": a.get_id_solicitacao(),
                                       "id_vaga": s.get_id_vaga(),
                                       "inicio": s.get_inicio(),
-                                      "fim": s.get_fim()}
+                                      "fim": s.get_fim(),
+                                      "cpf_proprietario": v.get_cpf_proprietario()}
                     acordos_output.append(acordo)
         except:
             return None
@@ -131,7 +134,8 @@ class ActionAcordo:
                                       "id_solicitacao": a.get_id_solicitacao(),
                                       "id_vaga": s.get_id_vaga(),
                                       "inicio": s.get_inicio(),
-                                      "fim": s.get_fim()}
+                                      "fim": s.get_fim(),
+                                      "cpf_motorista": s.get_cpf_motorista()}
                     acordos_output.append(acordo)
         except:
             return None
