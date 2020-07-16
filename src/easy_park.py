@@ -126,6 +126,8 @@ def home_motorista_screen():
                 print("id:", vaga["id_vaga"])
                 print("latitude:", vaga["latitude"])
                 print("longitude:", vaga["longitude"])
+                print("largura:", vaga["largura"], "m")
+                print("comprimento:", vaga["comprimento"], "m")
                 print("preço da hora:", "R$" + str(vaga["preco"]))
                 print()
 
