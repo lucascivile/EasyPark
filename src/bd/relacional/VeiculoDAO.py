@@ -15,3 +15,27 @@ class VeiculoDAO:
 
         self.connection.commit()
         cursor.close()
+
+    def list_by_cpf_motorista(self, cpf):
+        cursor = self.connection.cursor()
+
+        sql = "select * from veiculo where cpf_motorista = %s"
+        cursor.execute(sql, (cpf,))
+
+        records = cursor.fetchall()
+        if records is None:
+            return []
+
+        veiculos= []
+
+        for r in records:
+            veiculo = Veiculo()
+            veiculo.set_placa(r[0])
+            veiculo.set_cpf_motorista(r[1])
+            veiculo.set_modelo(r[2])
+            veiculo.set_ano(r[3])
+            veiculo.set_cor(r[4])
+            veiculos.append(veiculo)
+
+        cursor.close()
+        return veiculos

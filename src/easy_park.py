@@ -272,6 +272,7 @@ def home_proprietario_screen():
                 print("id da vaga:", solicitacao["id_vaga"])
                 print("início:", solicitacao["inicio"].strftime("%d/%m/%Y, %H:%M"))
                 print("fim:", solicitacao["fim"].strftime("%d/%m/%Y, %H:%M"))
+                print("veículos listados do motorista:", solicitacao["veiculos"])
                 print()
 
             id_solicitacao = request_int("Digite o id da solicitação a que deseja responder: ")

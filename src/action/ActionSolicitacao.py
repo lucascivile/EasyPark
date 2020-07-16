@@ -1,6 +1,7 @@
 from .ActionAcordo import ActionAcordo
 from modelo.relacional import Solicitacao
 from bd.relacional import SolicitacaoDAO
+from bd.relacional.VeiculoDAO import VeiculoDAO
 
 class ActionSolicitacao:
 
@@ -52,6 +53,7 @@ class ActionSolicitacao:
     def list_unanswered_by_proprietario(cpf):
         solicitacaoDAO = SolicitacaoDAO()
         solicitacoes_output = []
+        veiculoDAO = VeiculoDAO()
 
         try:
             solicitacoes = solicitacaoDAO.list_unanswered_by_cpf_proprietario(cpf)
@@ -61,6 +63,13 @@ class ActionSolicitacao:
                                       "id_vaga": s.get_id_vaga(),
                                       "inicio": s.get_inicio(), "fim": s.get_fim(), "cpf_motorista": s.get_cpf_motorista()}
 
+                veiculos = veiculoDAO.list_by_cpf_motorista(s.get_cpf_motorista())
+                veiculos_output = ""
+
+                for v in veiculos:
+                    veiculos_output += "\n" + v.get_modelo() + " " + str(v.get_ano()) + " " + v.get_cor() + " " + v.get_placa()
+
+                solicitacao["veiculos"] = veiculos_output
                 solicitacoes_output.append(solicitacao)
         except:
             return None
