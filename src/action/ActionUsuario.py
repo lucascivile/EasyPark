@@ -29,9 +29,8 @@ class ActionUsuario:
         try:
             usuarioDao.insert(usuario)
             usuarioDAODoc.insert(usuarioDoc)
-        except Exception as e:
+        except:
             usuarioDao.remove(cpf)
-            print(e)
             return False
 
         proprietario = Proprietario()

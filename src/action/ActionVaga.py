@@ -115,8 +115,7 @@ class ActionVaga:
             avaliacoes.append(novaAvaliacao)
             vagaDoc.set_avaliacoes(avaliacoes)
             vagaDAOdoc.update(vagaDoc)
-        except Exception as e:
-            print(e)
+        except Exception:
             return False
         else:
             return True
