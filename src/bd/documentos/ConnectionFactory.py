@@ -4,12 +4,14 @@ class ConnectionFactory:
 
     HOST = "localhost"
     PORT = 27017
-    DB = "ep3_documento"
+    DB = "easypark"
+    USERNAME = "ep3_documento"
+    PASSWORD = "ep3_documento"
 
     connection_factory = None
 
     def __init__(self):
-        self.database = MongoClient(ConnectionFactory.HOST, ConnectionFactory.PORT)[ConnectionFactory.DB]
+        self.database = MongoClient(ConnectionFactory.HOST, ConnectionFactory.PORT, username=ConnectionFactory.USERNAME, password=ConnectionFactory.PASSWORD)[ConnectionFactory.DB]
 
     def get_collection(self, name):
         return self.database[name]

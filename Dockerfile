@@ -1,8 +1,9 @@
-FROM postgres:latest
+FROM python:alpine
 
-WORKDIR /Users/eduardoolima/Google Drive/BCC/BCC-USP/2020.1/Kelly - 439/3Grupo/EasyPark
+WORKDIR ../EasyPark
 
-ENV POSTGRES_USER ep3_relacional
+COPY bd_scripts/relacional.sql /docker-entrypoint-initdb.d/
+COPY bd_scripts/grafos.txt /docker-entrypoint-initdb.d/
+COPY bd_scripts/documentos.js /docker-entrypoint-initdb.d/
 
-ENV POSTGRES_PASSWORD ep3_relacional
 

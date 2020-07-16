@@ -11,16 +11,20 @@ services:
       POSTGRES_DB: ep3
     ports:
       - 5432:5432
+    volumes:
+      - ./bd_scripts/relacional.sql:/docker-entrypoint-initdb.d/relacional.sql
 
   db_mongo:
     image: mongo
     container_name: "ep3_documento"
     environment:
-      MONGO_INITDB_DATABASE: ep3_documento
+      MONGO_INITDB_DATABASE: easypark
       MONGO_INITDB_ROOT_USERNAME: ep3_documento
       MONGO_INITDB_ROOT_PASSWORD: ep3_documento
     ports:
       - 27017:27017
+    volumes:
+      - ./bd_scripts/documentos.js:/docker-entrypoint-initdb.d/documentos.js
 
   db_neo4j:
     image: neo4j
@@ -32,3 +36,5 @@ services:
     ports:
       - "7474:7474"
       - "7687:7687"
+    volumes:
+      - ./bd_scripts/grafos.txt:/docker-entrypoint-initdb.d/grafos.txt
