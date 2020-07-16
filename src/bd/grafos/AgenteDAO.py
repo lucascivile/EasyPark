@@ -7,6 +7,9 @@ class AgenteDAO:
         self.session = ConnectionFactory.get_instance().get_session()
 
     def insert(self, agente):
+        def __insert_bairro_if_not_exists(tx, bairro):
+            tx.run("MERGE (:Bairro {nome:$bairro});")
+
         def __insert_agente_tx(tx, cpf):
             tx.run("CREATE (:Agente {cpf:$cpf});", cpf=cpf)
 
@@ -17,6 +20,7 @@ class AgenteDAO:
                 cpf=cpf, bairro=bairro
             )
 
+        self.session.write_transaction(__insert_bairro_if_not_exists, agente.get_bairro())
         self.session.write_transaction(__insert_agente_tx, agente.get_cpf())
         self.session.write_transaction(__insert_fiscaliza_tx, agente.get_cpf(), agente.get_bairro())
 
