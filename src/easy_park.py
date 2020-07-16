@@ -5,6 +5,13 @@ from action import ActionAcordo, ActionSolicitacao, ActionVaga, ActionVeiculo, A
 
 USER_CPF = None
 
+def request_float(msg):
+    while (True):
+        try:
+            return float(input(msg).replace(",", "."))
+        except:
+            pass
+
 def request_int(msg):
     while (True):
         try:
@@ -30,7 +37,7 @@ def home_proprietario_motorista_screen():
         | 2 - Motorista                                                    |
         --------------------------------------------------------------------
         """)
-        selected_mode = request_int(("Digite o código relativo ao perfil que você quer usar: "))
+        selected_mode = request_int("Digite o código relativo ao perfil que você quer usar: ")
 
     return "home_proprietario" if selected_mode == 1 else "home_motorista"
 
@@ -69,14 +76,14 @@ def home_motorista_screen():
         | 0 - Encerrar o Easy Park                                         |
         --------------------------------------------------------------------
         """)
-        selected_action = request_int(("Digite o código relativo à ação que deseja executar: "))
+        selected_action = request_int("Digite o código relativo à ação que deseja executar: ")
 
     if selected_action == 0:
         return "exit_system"
 
     if selected_action == 1:
         modelo =request_str("Modelo: ")
-        ano = request_int(("Ano: "))
+        ano = request_int("Ano: ")
         cor =request_str("Cor: ")
         placa =request_str("Placa: ")
 
@@ -106,8 +113,8 @@ def home_motorista_screen():
         inicio = datetime.datetime.strptime(input("Início do uso (formato dd/mm/aaaa hh:mm): "), date_fmt)
         fim = datetime.datetime.strptime(input("Fim do uso (formato dd/mm/aaaa hh:mm): "), date_fmt)
 
-        latitude = float(input("Latitude desejada: "))
-        longitude = float(input("Longitude desejada: "))
+        latitude = float(input("Latitude desejada (formato numérico, ex.: -22.438): "))
+        longitude = float(input("Longitude desejada (formato numérico, ex.: -22.438): "))
 
         vagas_details, vaga = ActionVaga.list_by_location_and_time(USER_CPF, inicio, fim, latitude, longitude)
 
@@ -119,10 +126,10 @@ def home_motorista_screen():
                 print("id:", vaga["id_vaga"])
                 print("latitude:", vaga["latitude"])
                 print("longitude:", vaga["longitude"])
-                print("preço da hora:", vaga["preco"])
+                print("preço da hora:", "R$" + str(vaga["preco"]))
                 print()
 
-            id_vaga = request_int(("Digite o id da vaga desejada: "))
+            id_vaga = request_int("Digite o id da vaga desejada: ")
 
             if ActionSolicitacao.insert(id_vaga, USER_CPF, inicio, fim):
                 print("\nSolicitação realizada com sucesso!")
@@ -153,11 +160,11 @@ def home_motorista_screen():
                 print("fim:", acordo["fim"].strftime("%d/%m/%Y, %H:%M"))
                 print()
 
-            id_acordo = request_int(("Digite o id do acordo cujo proprietário você deseja avaliar: "))
+            id_acordo = request_int("Digite o id do acordo cujo proprietário você deseja avaliar: ")
 
             nota = 0
             while (nota < 1 or nota > 5):
-                nota = request_int(("Avalie com uma nota de 1 a 5: "))
+                nota = request_int("Avalie com uma nota de 1 a 5: ")
 
             if ActionAcordo.insert_nota_to_proprietario(id_acordo, nota):
                 print("\nNota registrada com sucesso!")
@@ -221,13 +228,13 @@ def home_proprietario_screen():
         | 0 - Encerrar o Easy Park                                         |
         --------------------------------------------------------------------
         """)
-        selected_action = request_int(("Digite o código relativo à ação que deseja executar: "))
+        selected_action = request_int("Digite o código relativo à ação que deseja executar: ")
 
     if selected_action == 0:
         return "exit_system"
 
     if selected_action == 1:
-        logradouro =request_str("Novo logradouro do endereço (ex.: Avenida Paulista): ")
+        logradouro =request_str("Novo logradouro do endereço sem o número (ex.: Avenida Paulista): ")
         numero =request_str("Novo número do endereço: ")
         complemento =request_str("Novo complemento (pressione enter se não houver): ")
         cep =request_str("Novo CEP (somente dígitos): ")
@@ -238,11 +245,11 @@ def home_proprietario_screen():
             print("\nNão conseguimos atualizar o seu endereço")
     elif selected_action == 2: 
         bairro =request_str("Bairro da vaga: ")
-        latitude = float(input("Latitude: "))
-        longitude = float(input("Longitude: "))
-        largura = float(input("Largura: "))
-        comprimento = float(input("Comprimento: "))
-        preco = float(input("Preço por hora: "))
+        latitude = request_float("Latitude (formato numérico, ex.: -22.438): ")
+        longitude = request_float("Longitude (formato numérico, ex.: -22.438): ")
+        largura = request_float("Largura (metros): ")
+        comprimento = request_float("Comprimento (metros): ")
+        preco = request_float("Preço por hora (R$): ")
 
         if ActionVaga.insert(USER_CPF, bairro, latitude, longitude, largura, comprimento, preco):
             print("\nVaga adicionada com sucesso!")
@@ -264,7 +271,7 @@ def home_proprietario_screen():
                 print("fim:", solicitacao["fim"].strftime("%d/%m/%Y, %H:%M"))
                 print()
 
-            id_solicitacao = request_int(("Digite o id da solicitação a que deseja responder: "))
+            id_solicitacao = request_int("Digite o id da solicitação a que deseja responder: ")
 
             resposta = None
             while resposta is None:
@@ -295,11 +302,11 @@ def home_proprietario_screen():
                 print("fim:", acordo["fim"].strftime("%d/%m/%Y, %H:%M"))
                 print()
 
-            id_acordo = request_int(("Digite o id do acordo cujo motorista você deseja avaliar: "))
+            id_acordo = request_int("Digite o id do acordo cujo motorista você deseja avaliar: ")
 
             nota = 0
             while (nota < 1 or nota > 5):
-                nota = request_int(("Avalie com uma nota de 1 a 5: "))
+                nota = request_int("Avalie com uma nota de 1 a 5: ")
 
             if ActionAcordo.insert_nota_to_motorista(id_acordo, nota):
                 print("\nNota registrada com sucesso!")
@@ -341,7 +348,7 @@ def home_agente_screen():
         | 0 - Encerrar o Easy Park                                         |
         --------------------------------------------------------------------
         """)
-        selected_action = request_int(("Digite o código relativo à ação que deseja executar: " ))
+        selected_action = request_int("Digite o código relativo à ação que deseja executar: " )
 
     if selected_action == 0:
         return "exit_system"
@@ -368,7 +375,7 @@ def home_agente_screen():
                 print("longitude:", vaga["longitude"])
                 print()
     elif selected_action == 3:
-        id_vaga = request_int(("Selecione a vaga pelo id: "))
+        id_vaga = request_int("Selecione a vaga pelo id: ")
 
         avaliacao = None
         while avaliacao is None:
@@ -396,7 +403,7 @@ def signup_screen():
     date_fmt = "%d/%m/%Y"
 
     nome =request_str("Nome: ")
-    cpf =request_str("CPF: ")
+    cpf =request_str("CPF (somente dígitos): ")
     email =request_str("Email: ")
     senha =request_str("Senha: ")
     nascimento = datetime.datetime.strptime(input("Data de nascimento (formato dd/mm/aaaa): "), date_fmt)
@@ -411,10 +418,10 @@ def signup_screen():
         | 4 - Proprietário e motorista                                     |
         --------------------------------------------------------------------
         """)
-        user_type = request_int(("Digite o código relativo ao tipo do usuário: "))
+        user_type = request_int("Digite o código relativo ao tipo do usuário: ")
 
     if user_type == 1:
-        registro_municipal =request_str("Registro municipal: ")
+        registro_municipal =request_str("Registro municipal (cadeia de caracteres alfanuméricos): ")
         bairro =request_str("Bairro de atuação: ")
 
         if ActionUsuario.insert_agente(nome, cpf, email, senha, nascimento, registro_municipal, bairro):
@@ -439,7 +446,7 @@ def signup_screen():
         else:
             print("\nNão conseguimos cadastrar este motorista")
     elif user_type == 4:
-        logradouro =request_str("Logradouro do endereço (ex.: Avenida Paulista): ")
+        logradouro =request_str("Logradouro do endereço sem o número (ex.: Avenida Paulista): ")
         numero =request_str("Número do endereço: ")
         complemento =request_str("Complemento (pressione enter se não houver): ")
         cep =request_str("CEP (somente dígitos): ")
@@ -480,7 +487,7 @@ def initial_screen():
         | 0 - Encerrar o Easy Park                                         |
         --------------------------------------------------------------------
         """)
-        selected_navigation = request_int(("Digite o código relativo à ação que deseja executar: "))
+        selected_navigation = request_int("Digite o código relativo à ação que deseja executar: ")
 
 
     if selected_navigation == 0:
