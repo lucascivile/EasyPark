@@ -18,10 +18,10 @@
     "default": {
         "neo4j": {
             "hashes": [
-                "sha256:f82fcf10cfce1fc63a5b2404a1583bd28d048d04320ace0f7d5c06c70122c8ad"
+                "sha256:d7fa4adcb20dc724d95694b9eb6df6551b925dbe8abb733fbe73e42e18f75b26"
             ],
             "index": "pypi",
-            "version": "==4.0.1"
+            "version": "==4.0.2"
         },
         "psycopg2": {
             "hashes": [

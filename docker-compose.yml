@@ -37,4 +37,4 @@ services:
       - "7474:7474"
       - "7687:7687"
     volumes:
-      - ./bd_scripts/grafos.txt:/docker-entrypoint-initdb.d/grafos.txt
+      - ./bd_scripts/grafos.cypher:/docker-entrypoint-initdb.d/grafos.cypher

@@ -117,6 +117,7 @@ def home_motorista_screen():
     elif selected_action == 3:
         date_fmt = "%d/%m/%Y %H:%M"
 
+        print("Lembre-se de que seu período de aluguel deve estar no intervalo entre 15 minutos e 24 horas")
         inicio = request_datetime("Início do uso (formato dd/mm/aaaa hh:mm): ", date_fmt)
         fim = request_datetime("Fim do uso (formato dd/mm/aaaa hh:mm): ", date_fmt)
 
@@ -258,8 +259,8 @@ def home_proprietario_screen():
         bairro = request_str("Bairro da vaga: ")
         latitude = request_float("Latitude (formato numérico, ex.: -22.438): ")
         longitude = request_float("Longitude (formato numérico, ex.: -22.438): ")
-        largura = request_float("Largura (metros): ")
-        comprimento = request_float("Comprimento (metros): ")
+        largura = request_float("Largura (metros - entre 1.5 e 10): ")
+        comprimento = request_float("Comprimento (metros - entre 1.5 e 10): ")
         preco = request_float("Preço por hora (R$): ")
 
         if ActionVaga.insert(USER_CPF, bairro, latitude, longitude, largura, comprimento, preco):
