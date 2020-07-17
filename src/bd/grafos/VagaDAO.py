@@ -7,6 +7,9 @@ class VagaDAO:
         self.session = ConnectionFactory.get_instance().get_session()
 
     def insert(self, vaga):
+        def __insert_bairro_if_not_exists(tx, bairro):
+            tx.run("MERGE (:Bairro {nome:$bairro});", bairro=bairro)
+
         def __insert_vaga_tx(tx, id_vaga, latitude, longitude):
             tx.run(
                 "CREATE (:Vaga {id_vaga:$id_vaga, latitude:$latitude, longitude:$longitude}); ",
@@ -20,6 +23,7 @@ class VagaDAO:
                 id_vaga=id_vaga, bairro=bairro
             )
 
+        self.session.write_transaction(__insert_bairro_if_not_exists, vaga.get_bairro())
         self.session.write_transaction(__insert_vaga_tx, vaga.get_id_vaga(), vaga.get_latitude(),
                 vaga.get_longitude())
         self.session.write_transaction(__insert_esta_em_tx, vaga.get_id_vaga(), vaga.get_bairro())

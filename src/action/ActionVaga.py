@@ -46,52 +46,52 @@ class ActionVaga:
     @staticmethod
     def list_by_location_and_time(user_cpf, inicio, fim, latitude, longitude):
         vagaDAO = VagaDAO()
-        vagasAsString = []
+        vagas_output = []
             
         try:
             vagas = vagaDAO.list_free_by_location_and_time(user_cpf, latitude, longitude, inicio, fim)
             
             for v in vagas:
-                vagaAsString = repr({"id_vaga": v.get_id_vaga(), "latitude": v.get_latitude(),
+                vaga = {"id_vaga": v.get_id_vaga(), "latitude": v.get_latitude(),
                                       "longitude": v.get_longitude(), "largura": v.get_largura(),
-                                      "comprimento": v.get_comprimento()})
+                                      "comprimento": v.get_comprimento(), "preco": v.get_preco()}
                 
-                vagasAsString.append(vagaAsString)
+                vagas_output.append(vaga)
         except:
             return None, None
 
-        if len(vagasAsString):
-            return vagasAsString, True
+        if len(vagas_output):
+            return vagas_output, True
         else:
             estacionamentoDAOGrafos = EstacionamentoDAOGrafos()
             estacionamentos = estacionamentoDAOGrafos.list_by_coordinates(latitude, longitude)
-            estacionamentosAsString = []
+            estacionamentos_output = []
 
             for e in estacionamentos:
-                estacionamentoAsString = repr({"nome": e.get_nome(), "latitude": e.get_latitude(),
-                                                "longitude": e.get_longitude()})
+                estacionamento = {"nome": e.get_nome(), "latitude": e.get_latitude(),
+                                                "longitude": e.get_longitude()}
                 
-                estacionamentosAsString.append(estacionamentoAsString)
+                estacionamentos_output.append(estacionamento)
 
-            return estacionamentosAsString, False
+            return estacionamentos_output, False
 
     @staticmethod
     def list_by_agente_bairro(cpf):
         vagaDAOGrafos = VagaDAOGrafos()
-        vagasAsString = []
+        vagas_output = []
 
         try:
             vagas = vagaDAOGrafos.list_by_agente_bairro(cpf)
 
             for v in vagas:
-                vagaAsString = repr({"id_vaga": v.get_id_vaga(), "latitude": v.get_latitude(),
-                                      "longitude": v.get_longitude()})
+                vaga = {"id_vaga": v.get_id_vaga(), "latitude": v.get_latitude(),
+                                      "longitude": v.get_longitude()}
                 
-                vagasAsString.append(vagaAsString)
+                vagas_output.append(vaga)
         except:
             return None
         else:
-            return vagasAsString
+            return vagas_output
 
     @staticmethod  
     def insert_avaliacao(id_vaga, cpf_agente, avaliacao, comentario):
@@ -115,8 +115,7 @@ class ActionVaga:
             avaliacoes.append(novaAvaliacao)
             vagaDoc.set_avaliacoes(avaliacoes)
             vagaDAOdoc.update(vagaDoc)
-        except Exception as e:
-            print(e)
+        except Exception:
             return False
         else:
             return True

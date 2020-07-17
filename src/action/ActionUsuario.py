@@ -29,9 +29,8 @@ class ActionUsuario:
         try:
             usuarioDao.insert(usuario)
             usuarioDAODoc.insert(usuarioDoc)
-        except Exception as e:
+        except:
             usuarioDao.remove(cpf)
-            print(e)
             return False
 
         proprietario = Proprietario()
@@ -244,6 +243,16 @@ class ActionUsuario:
             return soma_nota / qtde_notas
         else:
             return -1
+
+    @staticmethod
+    def get_bairro_agente(cpf):
+        agenteDAOGrafos = AgenteDAOGrafos()
+
+        try:
+            agenteGrafos = agenteDAOGrafos.get(cpf)
+            return agenteGrafos.get_bairro()
+        except:
+            return None
 
     @staticmethod
     def update_endereco_proprietario(cpf, logradouro, numero, complemento, cep):

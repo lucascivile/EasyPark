@@ -1,6 +1,7 @@
 from .ActionAcordo import ActionAcordo
 from modelo.relacional import Solicitacao
 from bd.relacional import SolicitacaoDAO
+from bd.relacional.VeiculoDAO import VeiculoDAO
 
 class ActionSolicitacao:
 
@@ -24,7 +25,7 @@ class ActionSolicitacao:
     @staticmethod
     def list_by_motorista(cpf):
         solicitacaoDAO = SolicitacaoDAO()
-        solicitacoesAsString = []
+        solicitacoes_output = []
     
         try:
             solicitacoes = solicitacaoDAO.list_by_cpf_motorista(cpf)
@@ -32,39 +33,48 @@ class ActionSolicitacao:
                 resposta = s.get_resposta()
 
                 if resposta is not None:
-                    solicitacaoAsString = repr({"id_solicitacao": s.get_id_solicitacao(),
+                    solicitacao = {"id_solicitacao": s.get_id_solicitacao(),
                                       "id_vaga": s.get_id_vaga(),
                                       "inicio": s.get_inicio(), "fim": s.get_fim(),
-                                      "resposta": "aceita" if resposta else "recusada"})
+                                      "resposta": "aceita" if resposta else "recusada"}
                 else:
-                    solicitacaoAsString = repr({"id_solicitacao": s.get_id_solicitacao(),
+                    solicitacao = {"id_solicitacao": s.get_id_solicitacao(),
                                       "id_vaga": s.get_id_vaga(),
-                                      "inicio": s.get_inicio(), "fim": s.get_fim()})
+                                      "inicio": s.get_inicio(), "fim": s.get_fim(),
+                                      "resposta": "sem resposta"}
 
-                solicitacoesAsString.append(solicitacaoAsString)
+                solicitacoes_output.append(solicitacao)
         except:
             return None
         else:
-            return solicitacoesAsString
+            return solicitacoes_output
 
     @staticmethod
     def list_unanswered_by_proprietario(cpf):
         solicitacaoDAO = SolicitacaoDAO()
-        solicitacoesAsString = []
+        solicitacoes_output = []
+        veiculoDAO = VeiculoDAO()
 
         try:
             solicitacoes = solicitacaoDAO.list_unanswered_by_cpf_proprietario(cpf)
 
             for s in solicitacoes:
-                solicitacaoAsString = repr({"id_solicitacao": s.get_id_solicitacao(),
+                solicitacao = {"id_solicitacao": s.get_id_solicitacao(),
                                       "id_vaga": s.get_id_vaga(),
-                                      "inicio": s.get_inicio(), "fim": s.get_fim()})
+                                      "inicio": s.get_inicio(), "fim": s.get_fim(), "cpf_motorista": s.get_cpf_motorista()}
 
-                solicitacoesAsString.append(solicitacaoAsString)
+                veiculos = veiculoDAO.list_by_cpf_motorista(s.get_cpf_motorista())
+                veiculos_output = ""
+
+                for v in veiculos:
+                    veiculos_output += "\n" + v.get_modelo() + " " + str(v.get_ano()) + " " + v.get_cor() + " " + v.get_placa()
+
+                solicitacao["veiculos"] = veiculos_output
+                solicitacoes_output.append(solicitacao)
         except:
             return None
         else:
-            return solicitacoesAsString
+            return solicitacoes_output
 
     @staticmethod
     def update_resposta(id_solicitacao, cpf_proprietario, resposta):

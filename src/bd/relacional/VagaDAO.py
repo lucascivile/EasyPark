@@ -60,12 +60,12 @@ class VagaDAO:
         sql = "select * " + \
               "from vaga " + \
               "where cpf_proprietario != %s and ABS(latitude - %s) < 1 and ABS(longitude - %s) < 1 " + \
-              "and not exists ( " + \
+              "and liberada = TRUE and not exists ( " + \
               " select * from acordo as a join solicitacao as s " + \
               " on a.id_solicitacao = s.id_solicitacao " + \
               " where s.id_vaga = vaga.id_vaga and " + \
-              " (inicio > %s or fim < %s)) "
-        cursor.execute(sql, (user_cpf, latitude, longitude, inicio, fim))
+              " ((inicio <= %s and inicio >= %s) or (fim <= %s and fim  >= %s)))"
+        cursor.execute(sql, (user_cpf, latitude, longitude, fim, inicio, fim, inicio))
 
         records = cursor.fetchall()
         if records is None:
