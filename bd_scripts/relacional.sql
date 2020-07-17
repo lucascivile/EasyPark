@@ -67,8 +67,8 @@ CREATE TABLE vaga (
 	comprimento DECIMAL(4, 2),
 	liberada BOOLEAN NOT NULL DEFAULT FALSE,
     CONSTRAINT preco_hora_valido CHECK (preco_hora > 0),
-	CONSTRAINT largura_valida CHECK (largura > 1.5 AND largura < 10),
-	CONSTRAINT comprimento_valido CHECK (comprimento > 1.5 AND comprimento < 10),
+	CONSTRAINT largura_valida CHECK (largura >= 1.5 AND largura <= 10),
+	CONSTRAINT comprimento_valido CHECK (comprimento >= 1.5 AND comprimento <= 10),
 	FOREIGN KEY (cpf_proprietario)
 		REFERENCES proprietario(cpf_usuario)
 		ON DELETE SET NULL
@@ -82,7 +82,7 @@ CREATE TABLE solicitacao (
 	inicio TIMESTAMP NOT NULL,
 	fim TIMESTAMP NOT NULL,
 	resposta BOOLEAN,
-    CONSTRAINT periodo_valido CHECK (fim >= inicio + interval '10' minute AND fim < inicio + interval '24' hour),
+    CONSTRAINT periodo_valido CHECK (fim >= inicio + interval '10' minute AND fim <= inicio + interval '24' hour),
 	FOREIGN KEY (cpf_motorista)
 		REFERENCES motorista(cpf_usuario)
 		ON DELETE SET NULL
